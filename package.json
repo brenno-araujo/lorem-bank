@@ -5,6 +5,9 @@
   "repository": "https://github.com/brenno-araujo/lorem-bank.git",
   "author": "Brenno Araújo <brennoaraujo@yahoo.com>",
   "license": "MIT",
+  "scripts": {
+    "dev": "nodemon src/index.js"
+  },
   "dependencies": {
     "express": "^4.18.1"
   }
