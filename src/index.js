@@ -10,6 +10,22 @@ app.use(express.json());
 
 const customers = [];
 
+//middleware
+function verifyToken(request, response, next) {
+    const { cpf } = request.headers;
+
+    const customer = customers.find(customer => customer.cpf === cpf);
+
+    if (!customer) {
+        return response.status(401).json({ error: 'Customer not found' });
+    }
+
+    request.customer = customer;
+
+    return next();
+}
+
+//account
 app.post('/account', (request, response) => {
     const { id, name, cpf, password, statement } = request.body;
 
@@ -38,15 +54,10 @@ app.post('/account', (request, response) => {
 
 });
 
-app.get("/statement/", (request, response) => {
-    const { cpf } = request.headers;
-
-    const customer = customers.find((customer) => customer.cpf === cpf);
-    if (!customer) {
-        return response.status(400).json({
-            error: 'Customer not found'
-        });
-    }
+//statement
+app.get("/statement/", verifyToken, (request, response) => {
+    
+    const { customer } = request;
 
     return response.json(customer.statement);
 
