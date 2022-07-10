@@ -63,4 +63,19 @@ app.get("/statement/", verifyToken, (request, response) => {
 
 });
 
-app.listen(3000);
+app.get("/query", (request, response) => {
+    const query = request.query;
+    return response.json(query);
+});
+
+app.post("/body", (request, response) => {
+    const body = request.body;
+    return response.json(body);
+});
+
+app.put("/courses/:id", (request, response) => {
+    const {id} = request.params;
+    return response.json(id);
+});
+
+app.listen(3000); 
