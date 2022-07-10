@@ -63,19 +63,21 @@ app.get("/statement/", verifyToken, (request, response) => {
 
 });
 
-app.get("/query", (request, response) => {
-    const query = request.query;
-    return response.json(query);
-});
+app.post("/deposit" , verifyToken, (request, response) => {
+    const { description, amount } = request.body;
 
-app.post("/body", (request, response) => {
-    const body = request.body;
-    return response.json(body);
-});
+    const { customer } = request;
 
-app.put("/courses/:id", (request, response) => {
-    const {id} = request.params;
-    return response.json(id);
+    const statementOperation = {
+        description,
+        amount,
+        created_at: new Date(),
+        type: "credit"
+    };
+    customer.statement.push(statementOperation);
+
+    return response.status(201).send();
+
 });
 
 app.listen(3000); 
