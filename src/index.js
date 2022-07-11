@@ -125,4 +125,14 @@ app.get("/statement/date" , verifyToken, (request, response) => {
     return response.json(statement);
 });
 
+app.delete("/account", verifyToken, (request, response) => {
+    const { customer } = request;
+
+    const index = customers.indexOf(customer);
+
+    customers.splice(index, 1);
+
+    return response.status(200).json(customers);
+});
+
 app.listen(3000); 
