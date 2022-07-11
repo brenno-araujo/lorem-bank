@@ -10,7 +10,6 @@ app.use(express.json());
 
 const customers = [];
 
-//middleware
 function verifyToken(request, response, next) {
     const { cpf } = request.headers;
 
@@ -36,7 +35,6 @@ function getBalance(statement) {
     return balance;
 }
 
-//account
 app.post('/account', (request, response) => {
     const { id, name, cpf, password, statement } = request.body;
 
@@ -65,7 +63,6 @@ app.post('/account', (request, response) => {
 
 });
 
-//statement
 app.get("/statement/", verifyToken, (request, response) => {
     
     const { customer } = request;
